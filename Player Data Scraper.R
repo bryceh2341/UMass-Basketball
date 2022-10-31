@@ -1,12 +1,12 @@
-# teams <- teamids %>%
-#   filter(Season == "2021-22")
-# 
-# schedule <- c()
-#   
-# for (i in 1:length(teams$Team)) {
-#   team_schedule <- get_team_schedule(season = "2021-22", team.name = teams$Team[i])
-#   schedule <- c(schedule, team_schedule$Game_ID)
-# }
+teams <- teamids %>%
+  filter(Season == "2021-22")
+
+schedule <- c()
+
+for (i in 1:length(teams$Team)) {
+  team_schedule <- get_team_schedule(season = "2021-22", team.name = teams$Team[i])
+  schedule <- c(schedule, team_schedule$Game_ID)
+}
   
 # unique_schedule <- unique(schedule)
 # player_stats <- get_player_stats(play_by_play_data = get_play_by_play(unique_schedule), multi.games = T, simple = F)
@@ -146,3 +146,24 @@ full_player_stats <- full_player_stats %>%
 full_player_stats[is.na(full_player_stats)] = 0
 
 write.csv(full_player_stats, "C:\\Users\\Bryce Haase\\Desktop\\UMass Basketball\\2021_22_full_player_stats.csv", row.names = TRUE)
+
+# lineup_data$P1 <- gsub(".", " ", lineup_data$P1, fixed=TRUE)
+# lineup_data$P2 <- gsub(".", " ", lineup_data$P2, fixed=TRUE)
+# lineup_data$P3 <- gsub(".", " ", lineup_data$P3, fixed=TRUE)
+# lineup_data$P4 <- gsub(".", " ", lineup_data$P4, fixed=TRUE)
+# lineup_data$P5 <- gsub(".", " ", lineup_data$P5, fixed=TRUE)
+# 
+# lineup_data$lineup <- 0
+# 
+# for (i in 1:length(lineup_data)) {
+#   if (!is.na(lineup_data$P1[i])) {
+#     lineup <- c(lineup_data$P1[i], lineup_data$P2[i], lineup_data$P3[i], lineup_data$P4[i], lineup_data$P5[i])
+#     lineup <- paste(lineup, collapse=" - ")
+#     print(lineup)
+#     lineup_data$lineup[i] <- c(lineup)
+#   }
+# }
+
+# library(bigballR)
+# dfteam <- get_team_stats(play_by_play_data = get_play_by_play(c(5205147, 5179532)), include_transition = F)
+# get_date_games(date = "12/11/2021", conference = "All")
