@@ -18,17 +18,6 @@ basic_stats <- team_stats %>%
   filter(team %in% c(teams$team)) %>%
   select(team, wins, losses)
 
-misc_stats <- team_stats %>%
-  filter(team %in% c(teams$team)) %>%
-  mutate(Transition = round(fast_brk_pts/pts*100,1),
-         Second_Chance = round(second_chance_pts/pts*100,1),
-         Bench = round(bench_pts/pts*100,1),
-         Transition_Rank = round(rank(desc(Transition)),0),
-         Second_Chance_Rank = round(rank(desc(Second_Chance)),0),
-         Bench_Rank = round(rank(desc(Bench)),0)
-         ) %>%
-  select(team, Transition, Second_Chance, Bench, Transition_Rank, Second_Chance_Rank, Bench_Rank)
-
 #Possessions per game, 
 
 team_shooting <- bart_team_shooting(year = 2022, conf = NULL, team = NULL)
@@ -76,12 +65,7 @@ team_four_factors <- bart_factors(year=2022)
 
 team_tempo <- team_four_factors %>%
   select(team, tempo)
-misc_stats <- merge(team_tempo, misc_stats, by="team")
-misc_stats <- misc_stats %>%
-  mutate(tempo_rank = round(rank(tempo),0)
-         ) %>%
-  filter(team == team.name) %>%
-  select(tempo, tempo_rank, Transition, Transition_Rank, Second_Chance, Second_Chance_Rank, Bench, Bench_Rank)
+
 
 team_four_factors <- team_four_factors %>%
   mutate(off_efg_rank = round(rank(desc(off_efg)),0), 
@@ -96,6 +80,32 @@ team_four_factors <- team_four_factors %>%
   filter(team == team.name)
 team_four_factors[nrow(team_four_factors)+1,] <- list("Offense", team_four_factors$off_efg[1], team_four_factors$off_efg_rank[1], team_four_factors$off_to[1], team_four_factors$off_to_rank[1], team_four_factors$off_or[1], team_four_factors$off_or_rank[1], team_four_factors$off_ftr[1], team_four_factors$off_ftr_rank[1],0,0,0,0,0,0,0,0)
 team_four_factors[nrow(team_four_factors)+1,] <- list("Defense", team_four_factors$def_efg[1], team_four_factors$def_efg_rank[1], team_four_factors$def_to[1], team_four_factors$def_to_rank[1], team_four_factors$def_or[1], team_four_factors$def_or_rank[1], team_four_factors$def_ftr[1], team_four_factors$def_ftr_rank[1],0,0,0,0,0,0,0,0)
+
+misc_stats <- team_stats %>%
+  filter(team %in% c(teams$team)) %>%
+  mutate(Transition = round(fast_brk_pts/pts*100,1),
+         Second_Chance = round(second_chance_pts/pts*100,1),
+         Second_PPP = round(second_chance_pts/oreb,2),
+         Second_Conv = round(second_chance_fgm/(second_chance_fga+(team_four_factors$off_to[1]/100*second_chance_fga))*100,1),
+         #Second_Conv = round(second_chance_fgm/oreb*100,1),
+         Bench = round(bench_pts/pts*100,1),
+         Transition_Rank = round(rank(desc(Transition)),0),
+         Second_Chance_Rank = round(rank(desc(Second_Chance)),0),
+         Second_PPP_Rank = round(rank(desc(Second_PPP)),0),
+         Second_Conv_Rank = round(rank(desc(Second_Conv)),0),
+         Bench_Rank = round(rank(desc(Bench)),0)
+  ) %>%
+  select(team, Transition, Second_Chance, Second_PPP, Second_Conv, Bench, Transition_Rank, Second_Chance_Rank, Second_PPP_Rank, Second_Conv_Rank, Bench_Rank)
+
+misc_stats <- merge(team_tempo, misc_stats, by="team")
+
+misc_stats <- misc_stats %>%
+  mutate(tempo_rank = round(rank(tempo),0)
+  ) %>%
+  filter(team == team.name) %>%
+  select(tempo, tempo_rank, Transition, Transition_Rank, Second_Chance, Second_Chance_Rank, Second_PPP, Second_PPP_Rank, Second_Conv, Second_Conv_Rank, Bench, Bench_Rank)
+
+
 
 team_four_factors <- team_four_factors %>%
   slice(2:3) %>%
@@ -304,14 +314,15 @@ plot_3 <- team_shooting %>%
 
 plot_4 <- misc_stats %>%
   gt() %>%
-  cols_label(tempo = "Tempo", tempo_rank = "Rank", Transition = "Transition%", Transition_Rank = "Rank", Second_Chance = "2nd Chance %", Second_Chance_Rank = "Rank", Bench = "Bench%", Bench_Rank = "Rank"
+  cols_label(tempo = "Tempo", tempo_rank = "Rank", Transition = "Transition%", Transition_Rank = "Rank", Second_Chance = "2nd %", Second_Chance_Rank = "Rank", Bench = "Bench%", Bench_Rank = "Rank",
+             Second_PPP = "2nd PPP", Second_PPP_Rank = "Rank", Second_Conv = "2nd Conv.%", Second_Conv_Rank = "Rank",
   ) %>%
   tab_header(
     title = md("Misc"),
     #subtitle = table_subtitle
   )  %>%
   data_color(
-    columns = vars(tempo_rank, Transition_Rank, Second_Chance_Rank, Bench_Rank),
+    columns = vars(tempo_rank, Transition_Rank, Second_Chance_Rank, Bench_Rank, Second_PPP_Rank, Second_Conv_Rank),
     colors = scales::col_numeric(
       palette = paletteer::paletteer_d(
         palette = "RColorBrewer::RdYlGn",
@@ -323,11 +334,11 @@ plot_4 <- misc_stats %>%
   ) %>%
   cols_align(
     align = "left",
-    columns = vars(tempo, tempo_rank, Transition, Transition_Rank, Second_Chance, Second_Chance_Rank, Bench, Bench_Rank)
+    columns = vars(tempo, tempo_rank, Transition, Transition_Rank, Second_Chance, Second_Chance_Rank,Second_PPP, Second_PPP_Rank, Second_Conv, Second_Conv_Rank, Bench, Bench_Rank)
   ) %>%
-  cols_width(vars(tempo, tempo_rank, Transition_Rank, Second_Chance_Rank, Bench, Bench_Rank) ~ px(45),
-             vars(Second_Chance, Transition, ) ~ px(85),
-             #vars(Charges, Rim, Three) ~ px(45),
+  cols_width(vars(tempo, tempo_rank, Transition_Rank, Second_Chance_Rank, Bench, Bench_Rank,Second_Chance,  Second_PPP_Rank, Second_Conv_Rank,) ~ px(45),
+             vars(Transition, Second_Conv, ) ~ px(75),
+             vars(Second_PPP, ) ~ px(55),
              #vars(Successful_screen, Unsuccessful_screen) ~ px(45),
   ) %>%
   tab_style(

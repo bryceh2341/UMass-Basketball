@@ -19,7 +19,7 @@ data %>%
   ) %>%
   tab_header(
     title = md("Advanced Scrimmage Numbers"),
-    subtitle = "Vs. Holy Cross"
+    subtitle = "Vs. AIC"
   )  %>%
   # text_transform(
   #   locations = cells_body(vars(url)),

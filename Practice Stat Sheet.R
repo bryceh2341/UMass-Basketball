@@ -8,7 +8,7 @@ setwd("C:/Users/Bryce Haase/Desktop/UMass Basketball")
 
 practice_data <- read.csv("Stat Sheet Printable.csv")
 
-drill_name <- "Complete Totals"
+drill_name <- "Press Offense Off a FT"
 
 table_subtitle <- paste0(format(Sys.Date(), format="%B %d, %Y"), " | ", drill_name)
 #table_subtitle <- "October 20 - October 27 Totals"
@@ -61,6 +61,7 @@ full_practice_data$Three_Per = as.numeric(as.character(full_practice_data$Three_
 full_practice_data %>%
   gt() %>%
   gt_highlight_rows(rows = c(2, 4, 6, 8, 10, 12, 14), fill = "lightgrey") %>%
+  gt_highlight_rows(rows = c(16), fill = "lightgrey") %>%
   cols_label(url = "",
              Player = "Player",
              Pts = "Pts",
@@ -127,9 +128,9 @@ full_practice_data %>%
     align = "left",
     columns = vars(url, Player, Pts, Rim, Rim_Per, Mid, Mid_Per, Three, Three_Per, Off_Reb, Def_Reb, Reb, Ast, Stl, Blk, Tov, Charges, Seals, Fouls, Successful_screen, Unsuccessful_screen)
   ) %>%
-  cols_width(vars(url, Pts, Mid, Mid_Per, Off_Reb, Def_Reb, Reb, Ast, Stl, Blk, Tov, Seals, Fouls, Three_Per, Rim_Per) ~ px(35),
+  cols_width(vars(url, Pts,  Mid_Per, Off_Reb, Def_Reb, Reb, Ast, Stl, Blk, Tov, Seals, Fouls, Three_Per, Rim_Per) ~ px(35),
              vars(Player) ~ px(115),
-             vars(Charges, Rim, Three) ~ px(45),
+             vars(Charges, Rim, Three, Mid,) ~ px(45),
              vars(Successful_screen, Unsuccessful_screen) ~ px(45),
   ) %>%
   tab_style(
@@ -201,7 +202,7 @@ save_name <- paste0(format(Sys.Date(), format="%B %d"), " - ", drill_name, " Bas
 
 basic_practice_data %>%
   gt() %>%
-  gt_highlight_rows(rows = c(2, 4, 6, 8, 10, 12, 14), fill = "lightgrey") %>%
+  gt_highlight_rows(rows = c(2, 4, 6, 8, 10, 12, 14, 16), fill = "lightgrey") %>%
   cols_label(url = "",
              Player = "Player",
              Pts = "Pts",
@@ -233,9 +234,9 @@ basic_practice_data %>%
     align = "left",
     columns = vars(url, Player, Pts, Two, Two_Per, Three, Three_Per, Off_Reb, Def_Reb, Reb, Ast, Stl, Blk, Tov, Fouls)
   ) %>%
-  cols_width(vars(url, Pts, Two, Two_Per, Three, Three_Per, Off_Reb, Def_Reb, Reb, Ast, Stl, Blk, Tov, Fouls) ~ px(38),
+  cols_width(vars(url, Pts, Two_Per, Three_Per, Off_Reb, Def_Reb, Reb, Ast, Stl, Blk, Tov, Fouls) ~ px(38),
              vars(Player) ~ px(115),
-             #vars(Reb, Ast) ~ px(45),
+             vars(Two, Three, ) ~ px(45),
              #vars(Successful_screen, Unsuccessful_screen) ~ px(45),
   ) %>%
   tab_style(

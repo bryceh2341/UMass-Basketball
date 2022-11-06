@@ -9,7 +9,8 @@ library(stringr)
 library(dplyr)
 
 
-team_name <- "Towson"
+team_name <- "Central Connecticut"
+hoop_r_team_name <- "Cent Conn St"
 
 bart_player_stats <- bart_player_season(year=2022, stat = 'all')
 basic_player_stats <- bart_player_stats %>%
@@ -50,7 +51,7 @@ advanced_player_stats <- bart_player_stats %>%
   select(player, num, mpg, usg, net_rating, oreb_rate, dreb_rate, ast, to, ast_to, blk, stl, ftr, pfr, obpm, dbpm, bpm)
 
 
-team_roster <- ncaahoopR::get_roster(team_name, season = "2021-22")
+team_roster <- ncaahoopR::get_roster(hoop_r_team_name, season = "2021-22")
 team_roster <- team_roster %>%
   mutate(num = number) %>%
   select(num, name, position, height, player_image, class, weight)

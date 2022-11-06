@@ -59,12 +59,12 @@ assists_leaders <- full_practice_data %>%
 two_leaders <- basic_practice_data %>%
   arrange(desc(Two_Per)) %>%
   slice(1:3) %>%
-  select(url, Player, Two_Per)
+  select(url, Player, Two, Two_Per)
 
 three_leaders <- basic_practice_data %>%
   arrange(desc(Three_Per)) %>%
   slice(1:3) %>%
-  select(url, Player, Three_Per)
+  select(url, Player, Three, Three_Per)
 
 tov_leaders <- full_practice_data %>%
   arrange(desc(Tov)) %>%
@@ -319,6 +319,7 @@ plot_5 <- two_leaders %>%
   gt() %>%
   cols_label(url = "",
              Player = "",
+             Two = "",
              Two_Per = ""
   ) %>%
   tab_header(
@@ -334,9 +335,9 @@ plot_5 <- two_leaders %>%
   ) %>%
   cols_align(
     align = "left",
-    columns = vars(url, Player, Two_Per)
+    columns = vars(url, Player, Two, Two_Per)
   ) %>%
-  cols_width(vars(url, Two_Per) ~ px(35),
+  cols_width(vars(url, Two, Two_Per) ~ px(35),
              vars(Player) ~ px(115),
              #vars(Charges, Rim, Three) ~ px(45),
              #vars(Successful_screen, Unsuccessful_screen) ~ px(45),
@@ -380,6 +381,7 @@ plot_6 <- three_leaders %>%
   gt() %>%
   cols_label(url = "",
              Player = "",
+             Three = "",
              Three_Per = ""
   ) %>%
   tab_header(
@@ -395,9 +397,9 @@ plot_6 <- three_leaders %>%
   ) %>%
   cols_align(
     align = "left",
-    columns = vars(url, Player, Three_Per)
+    columns = vars(url, Player, Three, Three_Per)
   ) %>%
-  cols_width(vars(url, Three_Per) ~ px(35),
+  cols_width(vars(url, Three, Three_Per) ~ px(35),
              vars(Player) ~ px(115),
              #vars(Charges, Rim, Three) ~ px(45),
              #vars(Successful_screen, Unsuccessful_screen) ~ px(45),
@@ -444,5 +446,5 @@ plot_4 <- ggdraw() + draw_image("C:\\Users\\Bryce Haase\\Desktop\\UMass Basketba
 plot_5 <- ggdraw() + draw_image("C:\\Users\\Bryce Haase\\Desktop\\UMass Basketball\\Two Practice Leaders.png", scale = 1)
 plot_6 <- ggdraw() + draw_image("C:\\Users\\Bryce Haase\\Desktop\\UMass Basketball\\Three Practice Leaders.png", scale = 1)
 total_plot<-ggarrange(plot_1, plot_2, plot_3, plot_4, plot_5, plot_6, ncol=2, nrow=3) + bgcolor("transparent")
-annotate_figure(total_plot, top = text_grob("Complete Leaders", color = "black", face = "bold", family = "Consolas", size = 25))
+#annotate_figure(total_plot, top = text_grob("Complete Leaders", color = "black", face = "bold", family = "Consolas", size = 25))
 ggsave("C:\\Users\\Bryce Haase\\Desktop\\UMass Basketball\\Complete Leaders.png")

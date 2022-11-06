@@ -8,7 +8,7 @@ setwd("C:/Users/Bryce Haase/Desktop/UMass Basketball")
 
 practice_data <- read.csv("Stat Sheet Printable.csv")
 
-drill_name <- "Late Game Scenarios"
+drill_name <- "Overall"
 
 table_subtitle <- paste0(format(Sys.Date(), format="%B %d, %Y"), " | ", drill_name)
 #table_subtitle <- "October 20 - October 27 Totals"
@@ -91,7 +91,7 @@ full_practice_data %>%
              Unsuccessful_screen = "Bad Screen Def."
   ) %>%
   tab_header(
-    title = md("Holy Cross Scrimmage"),
+    title = md("AIC Scrimmage"),
     subtitle = table_subtitle
   )  %>%
   text_transform(

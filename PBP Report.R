@@ -347,7 +347,7 @@ overview %>%
     source_notes.font.size = 9,
     footnotes.padding = px(1),
   ) %>%
-  gtsave("C:\\Users\\Bryce Haase\\Desktop\\UMass Basketball\\General.png")
+  gtsave("C:\\Users\\Bryce Haase\\Desktop\\UMass Basketball\\General.png", expand = 0)
 
 
 general %>%
@@ -447,7 +447,7 @@ general %>%
     source_notes.font.size = 9,
     footnotes.padding = px(1),
   ) %>%
-  gtsave("C:\\Users\\Bryce Haase\\Desktop\\UMass Basketball\\Overview and Four Factors.png")
+  gtsave("C:\\Users\\Bryce Haase\\Desktop\\UMass Basketball\\Overview and Four Factors.png", expand = 0)
 
 shot_loc %>%
   gt()  %>%
@@ -540,7 +540,7 @@ shot_loc %>%
     source_notes.font.size = 9,
     footnotes.padding = px(1),
   ) %>%
-  gtsave("C:\\Users\\Bryce Haase\\Desktop\\UMass Basketball\\Shot Locations.png")
+  gtsave("C:\\Users\\Bryce Haase\\Desktop\\UMass Basketball\\Shot Locations.png", expand = 0)
 
 shot_per %>%
   gt()  %>%
@@ -636,7 +636,7 @@ shot_per %>%
     source_notes.font.size = 9,
     footnotes.padding = px(1),
   ) %>%
-  gtsave("C:\\Users\\Bryce Haase\\Desktop\\UMass Basketball\\Shot Percentages.png")
+  gtsave("C:\\Users\\Bryce Haase\\Desktop\\UMass Basketball\\Shot Percentages.png", expand = 0)
 
 
 setwd("C:/Users/Bryce Haase/Desktop/UMass Basketball")
@@ -644,6 +644,6 @@ plot0 <- ggdraw() + draw_image("C:\\Users\\Bryce Haase\\Desktop\\UMass Basketbal
 plot1 <- ggdraw() + draw_image("C:\\Users\\Bryce Haase\\Desktop\\UMass Basketball\\Overview and Four Factors.png", scale = 1)
 plot2 <- ggdraw() + draw_image("C:\\Users\\Bryce Haase\\Desktop\\UMass Basketball\\Shot Percentages.png", scale = 1)
 plot3 <- ggdraw() + draw_image("C:\\Users\\Bryce Haase\\Desktop\\UMass Basketball\\Shot Locations.png", scale = 1)
-total_plot<-ggarrange(plot0, plot1, plot2, plot3, ncol=1, nrow=4) + bgcolor("white")
+total_plot<-ggarrange(plot0, plot1, plot2, plot3, ncol=1, nrow=4) + bgcolor("transparent")
 #annotate_figure(total_plot, top = text_grob(paste0(home_team, ": ", data$home_score[i], " | ", away_team, ": ", data$away_score[i]), color = "black", face = "bold", family = "Consolas", size = 25))
 ggsave("C:\\Users\\Bryce Haase\\Desktop\\UMass Basketball\\All Data.png")
