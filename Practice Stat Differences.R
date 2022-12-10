@@ -6,51 +6,38 @@ library(gtExtras)
 
 setwd("C:/Users/Bryce Haase/Desktop/UMass Basketball")
 
-data <- read.csv("Advanced Practice Data.csv")
-data$Number <- as.character(data$Number)
+practice_data <- read.csv("Practice Differences.csv")
 
-
-data %>%
+practice_data %>%
   gt() %>%
   cols_label(Stat = "Stat",
-             Number = "#",
-             Rank = "NCAA Rank",
-             Explanation = "Description"
+             Part_1 = "November 2nd to 5th",
+             Part_2 = "November 6th to 9th",
+             Diff = "Difference"
   ) %>%
   tab_header(
-    title = md("UMass Advanced Numbers"),
-    subtitle = "Myrtle Beach Invitational"
+    title = md("Practice Stat Differences"),
+    subtitle = "November 2-5 & November 6-9"
   )  %>%
-  # text_transform(
-  #   locations = cells_body(vars(url)),
-  #   fn = function(x) {
-  #     web_image(url = x,
-  #               height = px(22.5))
-  #   }
-  # ) %>%
   data_color(
-    columns = vars(Rank),
+    columns = c(Diff),
+    #rows = where(is.numeric),
+    #rows = c(full_practice_data[1:14,]),
     colors = scales::col_numeric(
       palette = paletteer::paletteer_d(
-        palette = "RColorBrewer::RdYlGn",
-        direction  = -1
+        palette = "ggsci::red_material",
+        direction = -1
       ) %>% as.character(),
-      domain = c(358,0),
-      na.color = "#00441BFF"
+      domain = NULL
     )
   ) %>%
   cols_align(
     align = "left",
-    columns = vars(Stat, Number, Rank, Explanation)
+    columns = vars(Stat, Part_1, Part_2, Diff)
   ) %>%
-  cols_align(
-    align = "center",
-    columns = vars(Rank)
-  ) %>%
-  cols_width(vars(Rank) ~ px(65),
-             vars(Explanation) ~ px(300),
-             vars(Stat) ~ px(100),
-             vars(Number) ~ px(45)
+  cols_width(vars(Stat) ~ px(65),
+             vars(Diff) ~ px(65),
+             vars(Part_1, Part_2) ~ px(75),
   ) %>%
   tab_style(
     style = list(
@@ -84,4 +71,4 @@ data %>%
     source_notes.font.size = 9,
     footnotes.padding = px(1),
   ) %>%
-  gtsave("C:\\Users\\Bryce Haase\\Desktop\\UMass Basketball\\Advanced Scrimmage Data.png", expand = 0)
+  gtsave("November Practice Comparison.png")

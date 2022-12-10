@@ -8,7 +8,7 @@ setwd("C:/Users/Bryce Haase/Desktop/UMass Basketball")
 
 practice_data <- read.csv("Stat Sheet Printable.csv")
 
-drill_name <- "Press Offense Off a FT"
+drill_name <- "Complete Totals"
 
 table_subtitle <- paste0(format(Sys.Date(), format="%B %d, %Y"), " | ", drill_name)
 #table_subtitle <- "October 20 - October 27 Totals"

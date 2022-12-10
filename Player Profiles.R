@@ -7,12 +7,15 @@ library(RGraphics)
 library(gridExtra)
 library(stringr)
 library(dplyr)
+library(ncaahoopR)
 
+setwd("C:/Users/Bryce Haase/Desktop/UMass Basketball")
 
-team_name <- "Central Connecticut"
-hoop_r_team_name <- "Cent Conn St"
+team_name <- "Hofstra"
+ncaa_team_name <- "Hofstra"
+hoop_r_team_name <- "Hofstra"
 
-bart_player_stats <- bart_player_season(year=2022, stat = 'all')
+bart_player_stats <- bart_player_season(year=2023, stat = 'all')
 basic_player_stats <- bart_player_stats %>%
   filter(team == team_name) %>%
   mutate(mpg = round(mpg,1),
@@ -25,19 +28,55 @@ basic_player_stats <- bart_player_stats %>%
          three_pct = round(three_pct*100,1)) %>%
   select(player, pos, num, hgt, mpg, ppg, rpg, apg, spg, bpg, fg_pct, three_pct)
 
+# shooting_player_stats <- bart_player_stats %>%
+#   filter(team == team_name) %>%
+#   arrange(desc(mpg)) %>%
+#   mutate(rim = paste0(rim_m, "/", rim_a),
+#          rim_pct = round(rim_pct*100,1),
+#          mid = paste0(mid_m, "/", mid_a),
+#          mid_pct = round(mid_pct*100,1),
+#          three = paste0(three_m, "/", three_a),
+#          three_pct = round(three_pct*100,1),
+#          ft = paste0(ftm, "/", fta),
+#          ft_pct = round(ft_pct*100,1)) %>%
+#   select(player, num, mpg, efg, ts, rim, rim_pct, mid, mid_pct, three, three_pct, ft, ft_pct)
+# shooting_player_stats[is.na(shooting_player_stats)] <- 0
+
+schedule <- get_team_schedule(team.name = ncaa_team_name, season = "2022-23")
+stats <- get_player_stats(play_by_play_data = get_play_by_play(schedule$Game_ID[!is.na(schedule$Game_ID)]), multi.games = T, simple = F)
+roster <- get_team_roster(team.name = ncaa_team_name, season = "2022-23")
+roster <- roster %>%
+  mutate(num = Jersey) %>%
+  select(Player, num)
+stats <- stats %>%
+  filter(Team == ncaa_team_name) %>%
+  mutate(rim = paste0(RIMM, "/", RIMA),
+         rim_pct = round(RIM.*100,1),
+         mid = paste0(MIDM, "/", MIDA),
+         mid_pct = round(MID.*100,1),) %>%
+  select(Player, rim, rim_pct, mid, mid_pct)
+stats <- merge(stats, roster, by="Player")
+stats <- stats %>%
+  select(num, rim, rim_pct, mid, mid_pct)
+stats$num = as.numeric(as.character(stats$num))
+
 shooting_player_stats <- bart_player_stats %>%
   filter(team == team_name) %>%
+  select(team, player, num, mpg, efg, ts, three_m, three_a, three_pct, ftm, fta, ft_pct)
+
+shooting_player_stats <- merge(shooting_player_stats, stats, by="num")
+
+shooting_player_stats <- shooting_player_stats %>%
+  filter(team == team_name) %>%
   arrange(desc(mpg)) %>%
-  mutate(rim = paste0(rim_m, "/", rim_a),
-         rim_pct = round(rim_pct*100,1),
-         mid = paste0(mid_m, "/", mid_a),
-         mid_pct = round(mid_pct*100,1),
-         three = paste0(three_m, "/", three_a),
+  mutate(three = paste0(three_m, "/", three_a),
          three_pct = round(three_pct*100,1),
          ft = paste0(ftm, "/", fta),
          ft_pct = round(ft_pct*100,1)) %>%
   select(player, num, mpg, efg, ts, rim, rim_pct, mid, mid_pct, three, three_pct, ft, ft_pct)
 shooting_player_stats[is.na(shooting_player_stats)] <- 0
+
+
 
 advanced_player_stats <- bart_player_stats %>%
   filter(team == team_name) %>%
@@ -51,7 +90,7 @@ advanced_player_stats <- bart_player_stats %>%
   select(player, num, mpg, usg, net_rating, oreb_rate, dreb_rate, ast, to, ast_to, blk, stl, ftr, pfr, obpm, dbpm, bpm)
 
 
-team_roster <- ncaahoopR::get_roster(hoop_r_team_name, season = "2021-22")
+team_roster <- ncaahoopR::get_roster(hoop_r_team_name, season = "2022-23")
 team_roster <- team_roster %>%
   mutate(num = number) %>%
   select(num, name, position, height, player_image, class, weight)
@@ -61,7 +100,7 @@ basic_player_stats <- basic_player_stats %>%
   select(player_image, player, class, num, position, hgt, weight, mpg, ppg, rpg, apg, spg, bpg, fg_pct, three_pct) %>%
   arrange(desc(mpg))
 
-shooting_player_stats <- merge(shooting_player_stats, team_roster, by="num")
+shooting_player_stats <- merge(team_roster, shooting_player_stats, by="num")
 shooting_player_stats <- shooting_player_stats %>%
   arrange(desc(mpg)) %>%
   select(player_image, player, efg, ts, rim, rim_pct, mid, mid_pct, three, three_pct, ft, ft_pct)

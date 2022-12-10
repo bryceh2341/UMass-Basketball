@@ -11,6 +11,8 @@ library(gtExtras)
 
 personnel <- read.csv("C:\\Users\\Bryce Haase\\Desktop\\UMass Basketball\\Team_personnel_comp.csv")
 
+Opp <- "UMass Lowell"
+
 personnel %>%
   gt() %>%
   cols_label(url = "",
@@ -25,7 +27,7 @@ personnel %>%
     subtitle = ""
   )  %>%
   tab_spanner(label = "UMass", columns = vars(url, Player, Height)) %>%
-  tab_spanner(label = "Towson", columns = vars(Height_2, Player_2, url_2)) %>%
+  tab_spanner(label = Opp, columns = vars(Height_2, Player_2, url_2)) %>%
   # tab_spanner(label = "4 Fouls", columns = vars(four_record, four_win_per)) %>%
   # tab_spanner(label = "5 Fouls", columns = vars(five_record, five_win_per)) %>%
   text_transform(

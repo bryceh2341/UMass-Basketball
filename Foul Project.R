@@ -9,11 +9,13 @@ library(ggpubr)
 library(dplyr)
 library(gtExtras)
 
+setwd("C:/Users/Bryce Haase/Desktop/UMass Basketball")
 
-team <- "Towson"
+team <- "UMass Lowell"
 team_schedule <- get_team_schedule(season = "2021-22", team.name = team)
+team_schedule <- team_schedule[-c(13:14),]
 
-player_names <- c("CAMERON.HOLDEN", "NICOLAS.TIMBERLAKE", "CHARLES.THOMPSON")
+player_names <- c("ANTHONY.BLUNT", "ALLIN.BLUNT", "AYINDE.HIKIM", "EVERETTE.HAMMOND")
 
 for (i in 1:4) {
   for (j in player_names) {

@@ -12,7 +12,7 @@ library(gtExtras)
 team_stats <- bart_team_box(year=2022)
 teams <- bart_teams(year = 2022, conf = NULL)
 
-team.name = "Towson"
+team.name = "Colorado"
 
 basic_stats <- team_stats %>%
   filter(team %in% c(teams$team)) %>%
@@ -65,6 +65,7 @@ team_four_factors <- bart_factors(year=2022)
 
 team_tempo <- team_four_factors %>%
   select(team, tempo)
+team_tempo <- data.frame(team = team_tempo$team, tempo = team_tempo$tempo)
 
 
 team_four_factors <- team_four_factors %>%
@@ -100,7 +101,7 @@ misc_stats <- team_stats %>%
 misc_stats <- merge(team_tempo, misc_stats, by="team")
 
 misc_stats <- misc_stats %>%
-  mutate(tempo_rank = round(rank(tempo),0)
+  mutate(tempo_rank = round(rank(desc(tempo)),0)
   ) %>%
   filter(team == team.name) %>%
   select(tempo, tempo_rank, Transition, Transition_Rank, Second_Chance, Second_Chance_Rank, Second_PPP, Second_PPP_Rank, Second_Conv, Second_Conv_Rank, Bench, Bench_Rank)

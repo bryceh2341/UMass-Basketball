@@ -1,3 +1,8 @@
+library(toRvik)
+library(tidyr)
+library(tidyverse)
+library(bigballR)
+library(ncaahoopR)
 library(gt)
 library(cowplot)
 library(ggpubr)
@@ -6,30 +11,20 @@ library(gtExtras)
 
 setwd("C:/Users/Bryce Haase/Desktop/UMass Basketball")
 
-data <- read.csv("Advanced Practice Data.csv")
-data$Number <- as.character(data$Number)
+full_comp <- read.csv("Manual Team Stats Comp.csv")
 
+Opp = "UMass Lowell"
 
-data %>%
+full_comp %>%
   gt() %>%
-  cols_label(Stat = "Stat",
-             Number = "#",
-             Rank = "NCAA Rank",
-             Explanation = "Description"
+  cols_label(stat = "Stat", UMass = "UMass", Opp = Opp
   ) %>%
   tab_header(
-    title = md("UMass Advanced Numbers"),
-    subtitle = "Myrtle Beach Invitational"
+    title = md("Team Stats Comparison"),
+    #subtitle = table_subtitle
   )  %>%
-  # text_transform(
-  #   locations = cells_body(vars(url)),
-  #   fn = function(x) {
-  #     web_image(url = x,
-  #               height = px(22.5))
-  #   }
-  # ) %>%
   data_color(
-    columns = vars(Rank),
+    columns = vars(UMass, Opp),
     colors = scales::col_numeric(
       palette = paletteer::paletteer_d(
         palette = "RColorBrewer::RdYlGn",
@@ -41,16 +36,16 @@ data %>%
   ) %>%
   cols_align(
     align = "left",
-    columns = vars(Stat, Number, Rank, Explanation)
+    columns = vars(stat)
   ) %>%
   cols_align(
     align = "center",
-    columns = vars(Rank)
+    columns = vars(UMass, Opp)
   ) %>%
-  cols_width(vars(Rank) ~ px(65),
-             vars(Explanation) ~ px(300),
-             vars(Stat) ~ px(100),
-             vars(Number) ~ px(45)
+  cols_width(vars(stat, UMass, Opp) ~ px(125),
+             #vars(Player) ~ px(115),
+             #vars(Charges, Rim, Three) ~ px(45),
+             #vars(Successful_screen, Unsuccessful_screen) ~ px(45),
   ) %>%
   tab_style(
     style = list(
@@ -61,19 +56,19 @@ data %>%
       )
     ),
     locations = cells_body(
-      rows = Stat == "League Average"
+      rows = UMass == "League Average"
     )
   ) %>%
   tab_style(
     style = cell_fill(color = "floralwhite"),
     locations = cells_body(
-      rows = Stat == "League Average")
+      rows = UMass == "League Average")
   ) %>%
   tab_options(
     table.background.color = "floralwhite",
     column_labels.font.size = 10.5,
     table.font.size = 10,
-    heading.title.font.size  = 24,
+    heading.title.font.size  = 15,
     heading.title.font.weight = 'bold',
     heading.subtitle.font.size = 11,
     table.font.names = "Consolas",
@@ -83,5 +78,6 @@ data %>%
     footnotes.font.size = 8,
     source_notes.font.size = 9,
     footnotes.padding = px(1),
+    #column_labels.hidden = TRUE
   ) %>%
-  gtsave("C:\\Users\\Bryce Haase\\Desktop\\UMass Basketball\\Advanced Scrimmage Data.png", expand = 0)
+  gtsave("C:\\Users\\Bryce Haase\\Desktop\\UMass Basketball\\Team Comp.png", expand = 0)
