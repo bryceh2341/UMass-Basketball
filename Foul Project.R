@@ -11,11 +11,11 @@ library(gtExtras)
 
 setwd("C:/Users/Bryce Haase/Desktop/UMass Basketball")
 
-team <- "UMass Lowell"
-team_schedule <- get_team_schedule(season = "2021-22", team.name = team)
-team_schedule <- team_schedule[-c(13:14),]
+team <- "Saint Joseph's"
+team_schedule <- get_team_schedule(season = "2022-23", team.name = team)
+team_schedule <- team_schedule[c(1:18),]
 
-player_names <- c("ANTHONY.BLUNT", "ALLIN.BLUNT", "AYINDE.HIKIM", "EVERETTE.HAMMOND")
+player_names <- c("LYNN.GREER", "KACPER.KLACZEK", "ERIK.REYNOLDS", "EJIKE.OBINNA", "CAMERON.BROWN")
 
 for (i in 1:4) {
   for (j in player_names) {
@@ -223,7 +223,8 @@ for (j in player_names){
 
 df <- data.frame(player_names, two_foul_wins, two_foul_losses, three_foul_wins, three_foul_losses, four_foul_wins, four_foul_losses, five_foul_wins, five_foul_losses, two_foul_mins, two_foul_points, three_foul_mins, three_foul_points, four_foul_mins, four_foul_points, five_foul_mins, five_foul_points)
 
-team_roster <- get_team_roster(season = "2021-22", team.name = team)
+team_roster <- get_team_roster(season = "2022-23", team.name = team)
+#team_roster <- get_team_roster(season = "2022-23", team.name = "Saint Joe's")
 team_roster <- team_roster %>%
   mutate(player_names = Player,
          number = Jersey) %>%
@@ -240,7 +241,7 @@ team_name <- team
 #          number = num) %>%
 #   select(player, pfr, number)
 
-bart_player_stats <- bart_player_season(year=2022, stat='all')
+bart_player_stats <- bart_player_season(year=2023, stat='all')
 bart_player_stats <- bart_player_stats %>%
   filter(team == team_name) %>%
   mutate(Net_Per_Min = .671*(ortg-drtg)/mpg) %>%
@@ -249,7 +250,8 @@ bart_player_stats <- bart_player_stats %>%
   select(player, Net_Per_Min, pfr, number)
 
 
-team_roster <- ncaahoopR::get_roster(team, season = "2021-22")
+team_roster <- ncaahoopR::get_roster(team, season = "2022-23")
+#team_roster <- ncaahoopR::get_roster("Saint Joe's", season = "2022-23")
 team_roster <- team_roster %>%
   mutate(player = name) %>%
   select(number, player_image)

@@ -10,7 +10,7 @@ library(dplyr)
 library(gtExtras)
 
 
-team.name = "UMass Lowell"
+team.name = "Saint Joseph's"
 
 setwd("C:/Users/Bryce Haase/Desktop/UMass Basketball")
 
@@ -58,7 +58,7 @@ plot_1 <- team_rating %>%
         palette = "RColorBrewer::RdYlGn",
         direction  = -1
       ) %>% as.character(),
-      domain = c(358,0),
+      domain = c(363,0),
       na.color = "#00441BFF"
     )
   ) %>%
@@ -121,7 +121,7 @@ plot_2 <- team_four_factors %>%
         palette = "RColorBrewer::RdYlGn",
         direction  = -1
       ) %>% as.character(),
-      domain = c(358,0),
+      domain = c(363,0),
       na.color = "#00441BFF"
     )
   ) %>%
@@ -184,7 +184,7 @@ plot_3 <- team_shooting %>%
         palette = "RColorBrewer::RdYlGn",
         direction  = -1
       ) %>% as.character(),
-      domain = c(358,0),
+      domain = c(363,0),
       na.color = "#00441BFF"
     )
   ) %>%

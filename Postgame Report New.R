@@ -7,25 +7,25 @@ library(ggpubr)
 
 setwd("C:/Users/Bryce Haase/Desktop/UMass Basketball")
 
-game_id <- 401487701
-ncaa_game_id <- 5375943
+game_id <- 401484441
+ncaa_game_id <- 5391931
 
 full_player_stats <- read.csv("C:\\Users\\Bryce Haase\\Desktop\\UMass Basketball\\2021_22_player_stats.csv")
 
 #team_name = "Massachusetts"
-ESPN_Home <- "UMass"
-ESPN_Away <- "UMass Lowell"
+ESPN_Home <- "Saint Joseph's"
+ESPN_Away <- "UMass"
 
 #opp_off <- 105.0
 #opp_def <- 92.1
-home_off <- 102.8
-home_def <- 99.0
-away_off <- 102.6
-away_def <- 98.2
-avg <- 101.9
+home_off <- 102.5
+home_def <- 104.8
+away_off <- 102.0
+away_def <- 101.9
+avg <- 104.2
 
-home_color <- 'red'
-away_color <- 'blue'
+home_color <- 'black'
+away_color <- 'red'
 
 # game_shot_chart(game_id, heatmap = F)
 # ggsave("C:\\Users\\Bryce Haase\\Desktop\\UMass Basketball\\Shot Chart.png", width = 7, height = 5, dpi = 300, limitsize = F)
@@ -36,15 +36,15 @@ away_color <- 'blue'
 player_stats <- get_player_stats(get_play_by_play(ncaa_game_id), multi.games = F, simple = F)
 
 
-#home_roster <- ncaahoopR::get_roster("USF", season = "2022-23")
-home_roster <- ncaahoopR::get_roster(ESPN_Home, season = "2022-23")
+home_roster <- ncaahoopR::get_roster("Saint Joe's", season = "2022-23")
+#home_roster <- ncaahoopR::get_roster(ESPN_Home, season = "2022-23")
 home_roster <- home_roster %>%
   mutate(Jersey = number) %>%
   select(Jersey, player_image)
 
 home_roster <- merge(home_roster, get_team_roster(season = "2022-23", team.name = player_stats$Home[1]), by="Jersey")
 
-#away_roster <- ncaahoopR::get_roster(player_stats$Away[1], season = "2022-23")
+#away_roster <- ncaahoopR::get_roster("URI", season = "2022-23")
 away_roster <- ncaahoopR::get_roster(ESPN_Away, season = "2022-23")
 away_roster <- away_roster %>%
   mutate(Jersey = number) %>%
@@ -71,7 +71,7 @@ for (i in 1:length(id_table$team)) {
   }
 }
 
-url <- c(home_team_url, away_team_url)
+url <- c(away_team_url, home_team_url)
 
 team_stats <- team_stats %>%
   mutate(off_rtg_perc = round(pnorm((ORTG-mean(total_data$off_rtg))/sd(total_data$off_rtg)), 2),

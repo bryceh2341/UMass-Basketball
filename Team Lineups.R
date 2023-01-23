@@ -10,7 +10,7 @@ library(dplyr)
 library(gtExtras)
 library(data.table)
 
-team <- "UMass Lowell"
+team <- "Richmond"
 team_schedule <- get_team_schedule(season = "2022-23", team.name = team)
 
 lineups <- get_lineups(play_by_play_data = get_play_by_play(team_schedule$Game_ID), include_transition = T)

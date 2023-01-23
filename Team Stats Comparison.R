@@ -12,7 +12,7 @@ library(gtExtras)
 team_stats <- bart_team_box(year=2022)
 teams <- bart_teams(year = 2022, conf = NULL)
 
-team.name = "Colorado"
+team.name = "Saint Louis"
 
 team_rating <- bart_ratings(year = 2022)
 
