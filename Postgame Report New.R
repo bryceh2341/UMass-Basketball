@@ -7,24 +7,24 @@ library(ggpubr)
 
 setwd("C:/Users/Bryce Haase/Desktop/UMass Basketball")
 
-game_id <- 401484441
-ncaa_game_id <- 5391931
+game_id <- 401484615
+ncaa_game_id <- 5407799
 
 full_player_stats <- read.csv("C:\\Users\\Bryce Haase\\Desktop\\UMass Basketball\\2021_22_player_stats.csv")
 
 #team_name = "Massachusetts"
-ESPN_Home <- "Saint Joseph's"
-ESPN_Away <- "UMass"
+ESPN_Home <- "Tennessee"
+ESPN_Away <- "Alabama"
 
 #opp_off <- 105.0
 #opp_def <- 92.1
-home_off <- 102.5
-home_def <- 104.8
-away_off <- 102.0
-away_def <- 101.9
-avg <- 104.2
+home_off <- 112.3
+home_def <- 86.5
+away_off <- 117.4
+away_def <- 89.9
+avg <- 104.8
 
-home_color <- 'black'
+home_color <- 'orange'
 away_color <- 'red'
 
 # game_shot_chart(game_id, heatmap = F)
@@ -36,15 +36,15 @@ away_color <- 'red'
 player_stats <- get_player_stats(get_play_by_play(ncaa_game_id), multi.games = F, simple = F)
 
 
-home_roster <- ncaahoopR::get_roster("Saint Joe's", season = "2022-23")
-#home_roster <- ncaahoopR::get_roster(ESPN_Home, season = "2022-23")
+#home_roster <- ncaahoopR::get_roster("FAU", season = "2022-23")
+home_roster <- ncaahoopR::get_roster(ESPN_Home, season = "2022-23")
 home_roster <- home_roster %>%
   mutate(Jersey = number) %>%
   select(Jersey, player_image)
 
 home_roster <- merge(home_roster, get_team_roster(season = "2022-23", team.name = player_stats$Home[1]), by="Jersey")
 
-#away_roster <- ncaahoopR::get_roster("URI", season = "2022-23")
+#away_roster <- ncaahoopR::get_roster("Loyola-Chicago", season = "2022-23")
 away_roster <- ncaahoopR::get_roster(ESPN_Away, season = "2022-23")
 away_roster <- away_roster %>%
   mutate(Jersey = number) %>%

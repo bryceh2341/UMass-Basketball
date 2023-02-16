@@ -11,7 +11,7 @@ library(gtExtras)
 
 personnel <- read.csv("C:\\Users\\Bryce Haase\\Desktop\\UMass Basketball\\Team_personnel_comp.csv")
 
-Opp <- "Saint Joseph's"
+Opp <- "Loyola Chicago"
 
 personnel %>%
   gt() %>%

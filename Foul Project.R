@@ -11,11 +11,11 @@ library(gtExtras)
 
 setwd("C:/Users/Bryce Haase/Desktop/UMass Basketball")
 
-team <- "Saint Joseph's"
+team <- "Loyola Chicago"
 team_schedule <- get_team_schedule(season = "2022-23", team.name = team)
-team_schedule <- team_schedule[c(1:18),]
+team_schedule <- team_schedule[c(1:24),]
 
-player_names <- c("LYNN.GREER", "KACPER.KLACZEK", "ERIK.REYNOLDS", "EJIKE.OBINNA", "CAMERON.BROWN")
+player_names <- c("BRADEN.NORRIS", "JALEN.QUINN", "BEN.SCHWEIGER", "PHILIP.ALSTON", "BRYCE.GOLDEN")
 
 for (i in 1:4) {
   for (j in player_names) {
@@ -224,7 +224,7 @@ for (j in player_names){
 df <- data.frame(player_names, two_foul_wins, two_foul_losses, three_foul_wins, three_foul_losses, four_foul_wins, four_foul_losses, five_foul_wins, five_foul_losses, two_foul_mins, two_foul_points, three_foul_mins, three_foul_points, four_foul_mins, four_foul_points, five_foul_mins, five_foul_points)
 
 team_roster <- get_team_roster(season = "2022-23", team.name = team)
-#team_roster <- get_team_roster(season = "2022-23", team.name = "Saint Joe's")
+#team_roster <- get_team_roster(season = "2022-23", team.name = "Loyola-Chicago")
 team_roster <- team_roster %>%
   mutate(player_names = Player,
          number = Jersey) %>%

@@ -10,7 +10,7 @@ library(dplyr)
 library(gtExtras)
 
 
-team.name = "Saint Joseph's"
+team.name = "Loyola Chicago"
 
 setwd("C:/Users/Bryce Haase/Desktop/UMass Basketball")
 

@@ -11,9 +11,9 @@ library(ncaahoopR)
 
 setwd("C:/Users/Bryce Haase/Desktop/UMass Basketball")
 
-team_name <- "Richmond"
-ncaa_team_name <- "Richmond"
-hoop_r_team_name <- "Richmond"
+team_name <- "Loyola Chicago"
+ncaa_team_name <- "Loyola Chicago"
+hoop_r_team_name <- "Loyola-Chicago"
 
 bart_player_stats <- bart_player_season(year=2023, stat = 'all')
 basic_player_stats <- bart_player_stats %>%

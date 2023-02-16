@@ -12,19 +12,23 @@ library(ncaahoopR)
 bart_player_stats <- bart_player_season(year=2023, stat = 'all')
 
 bart_player_stats <- bart_player_stats %>%
-  filter(team %in% c("Central Connecticut", "Towson", "Colorado", "Murray St.", "Charlotte", "South Florida", "Harvard", "Albany", "UMass Lowell", "Hofstra", "North Texas", "Dartmouth", "St. Bonaventure", "Saint Louis", "George Washington", "La Salle"),
+  filter(team %in% c("Central Connecticut", "Towson", "Colorado", "Murray St.", "Charlotte", "South Florida", "Harvard", "Albany", "UMass Lowell", "Hofstra", "North Texas", "Dartmouth", "St. Bonaventure", "Saint Louis", "George Washington", "La Salle", "VCU", "Saint Joseph's"),
          player != "Aaron Estrada") %>%
   arrange(desc(ppg)) %>%
   slice(1:15) %>%
   select(player, ppg)
 
-bart_player_stats$points <- c(26,25,13,23,15,15,27,31,11,17,13,24,9,20,8)
+bart_player_stats$points <- c(26,25,23,13,23,15,15,27,31,17,11,24,20,25,9)
 
 bart_player_stats <- bart_player_stats %>%
   mutate(diff = round(points-ppg,1),
          ppg = round(ppg,1))
 
 #print(mean(bart_player_stats$diff))
+
+#Bishop: 26, Ledlum: 25, Simpson: 13, Perry: 23, Adams 15, Harris, 15, Timberlake 27,
+#Banks 31, Perry 11, da Silva 17, Holden 13, Amos 24, Brantley 9, Drumgoole 20, Thomas 8
+#Reynolds 23, Brown 25
 
 bart_player_stats %>%
   gt()  %>%
@@ -58,7 +62,7 @@ bart_player_stats %>%
         palette = "RColorBrewer::RdYlGn",
         direction  = -1
       ) %>% as.character(),
-      domain = c(-8, 15),
+      domain = c(-8, 16),
       na.color = "#00441BFF"
     )
   ) %>%

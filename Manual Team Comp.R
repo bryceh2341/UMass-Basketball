@@ -13,7 +13,7 @@ setwd("C:/Users/Bryce Haase/Desktop/UMass Basketball")
 
 full_comp <- read.csv("Manual Team Stats Comp.csv")
 
-Opp = "Saint Joseph's"
+Opp = "Loyola Chicago"
 
 full_comp %>%
   gt() %>%

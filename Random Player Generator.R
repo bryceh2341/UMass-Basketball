@@ -12,7 +12,7 @@ setwd("C:/Users/Bryce Haase/Desktop/UMass Basketball")
 # 
 # write.csv(players, "C:/Users/Bryce Haase/Desktop/UMass Basketball/Rotation Players.csv")
 # 
-# players <- read.csv("C:/Users/Bryce Haase/Desktop/UMass Basketball/Rotation Players.csv")
+players <- read.csv("C:/Users/Bryce Haase/Desktop/UMass Basketball/Rotation Players.csv")
 
 
 

@@ -12,14 +12,14 @@ library(ncaahoopR)
 bart_player_stats <- bart_player_season(year=2023, stat = 'all')
 
 bart_player_stats <- bart_player_stats %>%
-  filter(team %in% c("Central Connecticut", "Towson", "Colorado", "Murray St.", "Charlotte", "South Florida", "Harvard", "Albany", "UMass Lowell", "Hofstra", "North Texas", "Dartmouth", "St. Bonaventure", "Saint Louis", "George Washington", "La Salle"),
-         player %in% c("Nicolas Timberlake", "Ayinde Hikim", "Everette Hammond", "Tylor Perry", "Daryl Banks III", "James Bishop IV", "Jhamir Brickus"),
+  filter(team %in% c("Central Connecticut", "Towson", "Colorado", "Murray St.", "Charlotte", "South Florida", "Harvard", "Albany", "UMass Lowell", "Hofstra", "North Texas", "Dartmouth", "St. Bonaventure", "Saint Louis", "George Washington", "La Salle", "Saint Joseph's"),
+         player %in% c("Nicolas Timberlake", "Ayinde Hikim", "Tylor Perry", "Daryl Banks III", "James Bishop IV", "Jhamir Brickus", "Cameron Brown"),
          inches <= 77) %>%
   arrange(desc(ppg)) %>%
   #slice(1:15) %>%
   select(player, ppg)
 
-bart_player_stats$points <- c(26, 23, 27, 31, 20, 23, 25)
+bart_player_stats$points <- c(26, 23, 27, 31, 25, 23, 25)
 
 bart_player_stats <- bart_player_stats %>%
   mutate(diff = round(points-ppg,1),

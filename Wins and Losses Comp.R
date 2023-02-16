@@ -6,12 +6,27 @@ library(cowplot)
 library(ggpubr)
 library(dplyr)
 
-team <- "Richmond"
+team <- "Loyola Chicago"
+gp <- 24
 
 schedule <- get_team_schedule(team.name = team, season = "2022-23")
 
-wins <- c(schedule$Game_ID[c(1,2,6,9,10,12,13,15,16,17,19)])
-losses <- c(schedule$Game_ID[c(3,4,5,7,8,11,14,18,20)])
+win_games <- c()
+loss_games <- c()
+
+for (i in 1:gp) {
+  if ((schedule$Home[i] == team && (schedule$Home_Score[i] > schedule$Away_Score[i])) ||  (schedule$Away[i] == team && (schedule$Away_Score[i] > schedule$Home_Score[i]))) {
+    win_games <- c(win_games, i)
+  }
+  else if ((schedule$Home[i] == team && (schedule$Home_Score[i] < schedule$Away_Score[i])) ||  (schedule$Away[i] == team && (schedule$Away_Score[i] < schedule$Home_Score[i]))) {
+    loss_games <- c(loss_games, i)
+  }
+}
+
+# wins <- c(schedule$Game_ID[c(3,4,5,7,8,11,14,18,20)])
+# losses <- c(schedule$Game_ID[c(1,2,6,9,10,12,13,15,16,17,19)])
+wins <- c(schedule$Game_ID[win_games])
+losses <- c(schedule$Game_ID[loss_games])
 
 setwd("C:/Users/Bryce Haase/Desktop/UMass Basketball")
 
